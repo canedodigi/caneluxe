@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canedo Luxe - Lujo Excepcional</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', 'Arial', sans-serif;
+        }
+        
+        body {
+            background-color: #f9f9f9;
+            color: #333;
+        }
+        
+        header {
+            background-color: #fff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 50px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            color: #b8860b;
+            letter-spacing: 2px;
+        }
+        
+        .logo span {
+            color: #333;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 40px;
+        }
+        
+        nav ul li a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            font-size: 16px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+        
+        nav ul li a:hover {
+            color: #b8860b;
+        }
+        
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background: #b8860b;
+            bottom: -5px;
+            left: 0;
+            transition: width 0.3s ease;
+        }
+        
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+        
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/api/placeholder/1400/800') center/cover no-repeat;
+            color: #fff;
+            text-align: center;
+            padding-top: 80px;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            padding: 0 20px;
+        }
+        
+        .hero h1 {
+            font-size: 54px;
+            margin-bottom: 20px;
+            font-weight: 300;
+            letter-spacing: 5px;
+        }
+        
+        .hero h1 strong {
+            font-weight: 700;
+            color: #b8860b;
+        }
+        
+        .hero p {
+            font-size: 18px;
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 15px 30px;
+            background-color: #b8860b;
+            color: #fff;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 500;
+            border-radius: 0;
+            transition: all 0.3s ease;
+            border: 2px solid #b8860b;
+        }
+        
+        .btn:hover {
+            background-color: transparent;
+            color: #b8860b;
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid #fff;
+            margin-left: 15px;
+        }
+        
+        .btn-outline:hover {
+            background-color: #fff;
+            color: #333;
+            border-color: #fff;
+        }
+        
+        .features {
+            padding: 100px 50px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .section-title h2 {
+            font-size: 36px;
+            font-weight: 300;
+            letter-spacing: 3px;
+            color: #333;
+            position: relative;
+            display: inline-block;
+            padding-bottom: 15px;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            width: 60px;
+            height: 2px;
+            background-color: #b8860b;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .feature-grid {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+        
+        .feature {
+            flex-basis: 30%;
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px;
+            background-color: #fff;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+        }
+        
+        .feature:hover {
+            transform: translateY(-10px);
+        }
+        
+        .feature i {
+            font-size: 48px;
+            color: #b8860b;
+            margin-bottom: 20px;
+        }
+        
+        .feature h3 {
+            font-size: 22px;
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+        
+        .feature p {
+            font-size: 16px;
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        .about {
+            padding: 100px 50px;
+            background-color: #f2f2f2;
+        }
+        
+        .about-content {
+            display: flex;
+            max-width: 1400px;
+            margin: 0 auto;
+            align-items: center;
+        }
+        
+        .about-image {
+            flex: 1;
+            padding-right: 50px;
+        }
+        
+        .about-image img {
+            width: 100%;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .about-text {
+            flex: 1;
+        }
+        
+        .about-text h2 {
+            font-size: 36px;
+            margin-bottom: 30px;
+            font-weight: 300;
+            letter-spacing: 2px;
+        }
+        
+        .about-text h2 strong {
+            font-weight: 600;
+            color: #b8860b;
+        }
+        
+        .about-text p {
+            font-size: 16px;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            color: #666;
+        }
+        
+        footer {
+            background-color: #222;
+            color: #fff;
+            padding: 30px 0;
+            text-align: center;
+        }
+        
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 50px;
+        }
+        
+        .copyright {
+            font-size: 14px;
+            color: #999;
+        }
+        
+        .social-links a {
+            color: #fff;
+            margin-left: 15px;
+            font-size: 18px;
+            transition: color 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            color: #b8860b;
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                padding: 15px 20px;
+                flex-direction: column;
+            }
+            
+            nav ul {
+                margin-top: 15px;
+            }
+            
+            nav ul li {
+                margin-left: 20px;
+            }
+            
+            nav ul li:first-child {
+                margin-left: 0;
+            }
+            
+            .hero h1 {
+                font-size: 36px;
+            }
+            
+            .feature-grid {
+                flex-direction: column;
+            }
+            
+            .feature {
+                flex-basis: 100%;
+            }
+            
+            .about-content {
+                flex-direction: column;
+            }
+            
+            .about-image {
+                padding-right: 0;
+                margin-bottom: 30px;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+            }
+            
+            .social-links {
+                margin-top: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo">CANEDO <span>LUXE</span></div>
+            <nav>
+                <ul>
+                    <li><a href="inicio.html">Inicio</a></li>
+                    <li><a href="tienda.html">Tienda</a></li>
+                    <li><a href="#contacto">Contacto</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Descubre el <strong>Lujo Excepcional</strong></h1>
+            <p>En Canedo Luxe, transformamos lo ordinario en extraordinario. Nuestras colecciones exclusivas están diseñadas para quienes aprecian la elegancia atemporal y la calidad sin compromisos.</p>
+            <a href="tienda.html" class="btn">Explorar Colección</a>
+            <a href="#contacto" class="btn btn-outline">Contáctanos</a>
+        </div>
+    </section>
+
+    <section class="features">
+        <div class="section-title">
+            <h2>NUESTRO COMPROMISO</h2>
+        </div>
+        <div class="feature-grid">
+            <div class="feature">
+                <i>★</i>
+                <h3>Calidad Superior</h3>
+                <p>Cada pieza está elaborada con los materiales más finos y una atención meticulosa al detalle, garantizando productos que perduran en el tiempo.</p>
+            </div>
+            <div class="feature">
+                <i>✦</i>
+                <h3>Diseño Exclusivo</h3>
+                <p>Nuestras colecciones combinan elegancia clásica con toques contemporáneos, creando piezas únicas que destacan por su originalidad.</p>
+            </div>
+            <div class="feature">
+                <i>♢</i>
+                <h3>Experiencia Premium</h3>
+                <p>Desde la selección hasta la entrega, ofrecemos un servicio personalizado que eleva cada aspecto de tu experiencia con Canedo Luxe.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="about">
+        <div class="about-content">
+            <div class="about-image">
+                <img src="/api/placeholder/700/500" alt="Sobre Canedo Luxe">
+            </div>
+            <div class="about-text">
+                <h2>La Esencia de <strong>Canedo Luxe</strong></h2>
+                <p>Fundada con la visión de redefinir el lujo contemporáneo, Canedo Luxe nace de la pasión por la excelencia y el refinamiento. Nuestra filosofía se basa en la creación de experiencias memorables a través de productos excepcionales.</p>
+                <p>En cada colección, fusionamos artesanía tradicional con innovación, asegurando que cada pieza no solo cumpla, sino que supere las expectativas de nuestros clientes más exigentes.</p>
+                <p>Nos enorgullece ofrecer productos que no solo son objetos de deseo, sino símbolos de un estilo de vida donde la calidad y la belleza son innegociables.</p>
+                <a href="tienda.html" class="btn">Descubrir Más</a>
+            </div>
+        </div>
+    </section>
+
+    <footer id="contacto">
+        <div class="footer-content">
+            <div class="copyright">
+                © 2025 Canedo Luxe. Todos los derechos reservados.
+            </div>
+            <div class="social-links">
+                <a href="#" title="Instagram">Instagram</a>
+                <a href="#" title="Facebook">Facebook</a>
+                <a href="#" title="Twitter">Twitter</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

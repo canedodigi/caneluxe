@@ -1,0 +1,291 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tienda Canedo Luxe</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Outfit', sans-serif;
+      margin: 0;
+      background: #f5f7fa;
+      color: #333;
+    }
+    header {
+      background: #111;
+      color: white;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .logo {
+      font-size: 1.8rem;
+      font-weight: bold;
+    }
+    nav a {
+      color: white;
+      margin-left: 1rem;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    nav a:hover {
+      text-decoration: underline;
+    }
+    .category-bar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+      background: white;
+      padding: 1rem 2rem;
+      border-bottom: 1px solid #ddd;
+    }
+    .category-bar button {
+      background: #e0e0e0;
+      border: none;
+      border-radius: 30px;
+      padding: 0.6rem 1.2rem;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    .category-bar button:hover {
+      background: #111;
+      color: white;
+    }
+    .sold-messages {
+      background: #ffffff;
+      padding: 1rem 2rem;
+      border-bottom: 1px solid #ddd;
+      font-size: 0.95rem;
+      color: #444;
+    }
+    .products {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.5rem;
+      padding: 2rem;
+    }
+    .product-card {
+      background: white;
+      padding: 1rem;
+      border-radius: 12px;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+    .product-card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+    .product-card h3 {
+      font-size: 1.1rem;
+      margin: 0.5rem 0;
+    }
+    .product-card p {
+      color: #27ae60;
+      font-weight: bold;
+    }
+    .buttons {
+      margin-top: 0.5rem;
+    }
+    .buttons button {
+      margin: 0.25rem;
+      padding: 0.4rem 0.8rem;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+      background-color: #111;
+      color: white;
+      font-weight: 500;
+    }
+    #cartWindow {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 300px;
+      max-height: 400px;
+      overflow-y: auto;
+      background: white;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.3);
+      padding: 1rem;
+      display: none;
+      z-index: 1000;
+    }
+    #cartItems div {
+      margin-bottom: 0.5rem;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 0.5rem;
+    }
+    #cartItems input {
+      width: 40px;
+    }
+    #cartWindow button {
+      margin-top: 0.5rem;
+      padding: 0.4rem 0.8rem;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      background-color: #27ae60;
+      color: white;
+    }
+    #notification {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: #27ae60;
+      color: white;
+      padding: 1rem 1.5rem;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      display: none;
+      z-index: 2000;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo">Canedo Luxe</div>
+  <nav>
+    <a href="#">Inicio</a>
+    <a href="inicio.html">Página Principal</a>
+  </nav>
+</header>
+
+<div class="category-bar">
+  <button onclick="showCategory('herramientas')">Herramientas</button>
+  <button onclick="showCategory('papeleria')">Papelería</button>
+  <button onclick="showCategory('vehiculos')">Vehículos</button>
+  <button onclick="showCategory('deportes')">Deportes</button>
+  <button onclick="showCategory('bebes')">Bebés</button>
+  <button onclick="showCategory('mascotas')">Mascotas</button>
+  <button onclick="showCategory('joyas')">Joyas</button>
+  <button onclick="showCategory('moda')">Moda</button>
+  <button onclick="showCategory('tecnologia')">Tecnología</button>
+  <button onclick="showCategory('hogar')">Hogar</button>
+  <button onclick="showCategory('salud')">Salud</button>
+</div>
+
+<div class="sold-messages">
+  ✅ Taladro Eléctrico vendido hace 1 hora · 🎧 Audífonos Pro comprados esta mañana · 🧥 Hoodie Oversize vendido ayer · 🛏️ Juego de Sábanas comprado hace 2 días
+</div>
+
+<div class="products" id="productContainer"></div>
+
+<div id="cartWindow">
+  <h3>🛒 Carrito</h3>
+  <div id="cartItems"></div>
+  <p id="cartTotal"><strong>Total: $0</strong></p>
+  <button onclick="comprarTodo()">Finalizar compra</button>
+</div>
+
+<div id="notification"></div>
+
+<script>
+const products = {
+  herramientas: [{ name: 'Taladro Eléctrico', image: 'https://via.placeholder.com/240x180?text=Taladro', price: 120000 }],
+  papeleria: [{ name: 'Resma de Papel Carta', image: 'https://via.placeholder.com/240x180?text=Papel', price: 15000 }],
+  vehiculos: [{ name: 'Auto RC 4x4', image: 'https://via.placeholder.com/240x180?text=Auto+RC', price: 95000 }],
+  deportes: [{ name: 'Balón Profesional Fútbol', image: 'https://via.placeholder.com/240x180?text=Balón', price: 68000 }],
+  bebes: [{ name: 'Coche para Bebé', image: 'https://via.placeholder.com/240x180?text=Coche+Bebé', price: 320000 }],
+  mascotas: [{ name: 'Mordedor para Perro', image: 'https://via.placeholder.com/240x180?text=Mordedor', price: 11000 }],
+  joyas: [{ name: 'Pulsera Inoxidable', image: 'https://via.placeholder.com/240x180?text=Pulsera', price: 30000 }],
+  moda: [{ name: 'Hoodie Oversize', image: 'https://via.placeholder.com/240x180?text=Hoodie', price: 58000 }],
+  tecnologia: [{ name: 'Audífonos Pro', image: 'https://via.placeholder.com/240x180?text=Audifonos', price: 99000 }],
+  hogar: [{ name: 'Juego de Sábanas', image: 'https://via.placeholder.com/240x180?text=Sabanas', price: 65000 }],
+  salud: [{ name: 'Cepillo Facial', image: 'https://via.placeholder.com/240x180?text=Cepillo', price: 29000 }]
+};
+
+let cart = [];
+
+function showCategory(category) {
+  const container = document.getElementById('productContainer');
+  const productos = products[category] || [];
+  container.innerHTML = '';
+  productos.forEach(p => {
+    const card = document.createElement('div');
+    card.className = 'product-card';
+    card.innerHTML = `
+      <img src="${p.image}" alt="${p.name}">
+      <h3>${p.name}</h3>
+      <p>$${p.price.toLocaleString('es-CO')}</p>
+      <div class="buttons">
+        <button onclick="redirigirAPago('${p.name}')">Comprar</button>
+        <button onclick="agregarAlCarrito('${p.name}', ${p.price})">Agregar</button>
+      </div>`;
+    container.appendChild(card);
+  });
+}
+
+function redirigirAPago(nombre) {
+  window.location.href = `pagar.html?producto=${encodeURIComponent(nombre)}`;
+}
+
+function agregarAlCarrito(nombre, precio) {
+  const existe = cart.find(p => p.nombre === nombre);
+  if (existe) {
+    existe.cantidad += 1;
+  } else {
+    cart.push({ nombre, precio, cantidad: 1 });
+  }
+  actualizarCarrito();
+  mostrarNotificacion(`${nombre} agregado al carrito.`);
+  document.getElementById('cartWindow').style.display = 'block';
+}
+
+function actualizarCarrito() {
+  const cartItems = document.getElementById('cartItems');
+  const cartTotal = document.getElementById('cartTotal');
+  cartItems.innerHTML = '';
+  let total = 0;
+  cart.forEach((item, i) => {
+    total += item.precio * item.cantidad;
+    cartItems.innerHTML += `
+      <div>
+        ${item.nombre} - $${item.precio.toLocaleString('es-CO')} x
+        <input type="number" min="1" value="${item.cantidad}" onchange="cambiarCantidad(${i}, this.value)">
+        <button onclick="eliminarDelCarrito(${i})">✕</button>
+      </div>`;
+  });
+  cartTotal.innerHTML = `<strong>Total: $${total.toLocaleString('es-CO')}</strong>`;
+}
+
+function cambiarCantidad(index, cantidad) {
+  cart[index].cantidad = parseInt(cantidad);
+  actualizarCarrito();
+}
+
+function eliminarDelCarrito(index) {
+  cart.splice(index, 1);
+  actualizarCarrito();
+  if (cart.length === 0) {
+    document.getElementById('cartWindow').style.display = 'none';
+  }
+}
+
+function comprarTodo() {
+  if (cart.length === 0) return alert("El carrito está vacío.");
+  const resumen = cart.map(p => `${p.nombre} x${p.cantidad}`).join(', ');
+  window.location.href = `pagar.html?producto=${encodeURIComponent(resumen)}`;
+}
+
+function mostrarNotificacion(texto) {
+  const noti = document.getElementById('notification');
+  noti.textContent = texto;
+  noti.style.display = 'block';
+  setTimeout(() => noti.style.display = 'none', 3000);
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+  showCategory('herramientas');
+});
+</script>
+
+</body>
+</html>
